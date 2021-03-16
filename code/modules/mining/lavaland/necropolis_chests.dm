@@ -118,7 +118,7 @@
 			new /obj/item/pickaxe/rosegold(src)
 		if(10)
 			new /obj/item/bedsheet/cosmos(src)
-			new /obj/item/melee/skateboard/hoverboard(src)
+//			new /obj/item/melee/skateboard/hoverboard(src)
 		if(11)
 			new /obj/item/disk/tech_disk/illegal(src)
 		if(12)
@@ -157,7 +157,7 @@
 			new /obj/item/pickaxe/rosegold(src)
 		if(10)
 			new /obj/item/bedsheet/cosmos(src)
-			new /obj/item/melee/skateboard/hoverboard(src)
+//			new /obj/item/melee/skateboard/hoverboard(src)
 		if(11)
 			new /obj/item/disk/tech_disk/illegal(src)
 		if(12)
@@ -267,7 +267,7 @@
 //Rod of Asclepius
 /obj/item/rod_of_asclepius
 	name = "\improper Rod of Asclepius"
-	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding it's way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
+	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding its way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "asclepius_dormant"
 	var/activated = FALSE

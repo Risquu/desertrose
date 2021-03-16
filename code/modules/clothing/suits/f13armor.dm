@@ -17,8 +17,6 @@
 	if(!allowed)
 		allowed = GLOB.security_vest_allowed
 */
-/obj/item/clothing/suit/armor/f13
-
 //Leather and metal
 /obj/item/clothing/suit/armor/f13/leather_jacket
 	name = "leather jacket"
@@ -94,7 +92,7 @@
 	icon_state = "metal_chestplate"
 	item_state = "metal_chestplate"
 	armor = list("tier" = 4, "energy" = 40, "bomb" = 40, "bio" = 30, "rad" = 15, "fire" = 60, "acid" = 0)
-	slowdown = 0.05
+	slowdown = 0.25
 	strip_delay = 10
 
 /obj/item/clothing/suit/armor/fluff/metalarmor/Initialize()
@@ -278,6 +276,14 @@
 	slowdown = 0.4
 	requires_training = FALSE
 
+/obj/item/clothing/suit/armor/f13/power_armor/vaulttec
+	name = "Vault-Tec technical power armour"
+	desc = "(VIII) ."
+	icon_state = "vaultpa"
+	item_state = "vault_pa"
+	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0)
+	slowdown = 0
+
 /obj/item/clothing/suit/armor/f13/power_armor/excavator
 	name = "excavator power armor"
 	desc = "(VIII) Developed by Garrahan Mining Co. in collaboration with West Tek, the Excavator-class power armor was designed to protect miners from rockfalls and airborne contaminants while increasing the speed at which they could work. "
@@ -317,7 +323,7 @@
 
 /obj/item/clothing/suit/armor/f13/power_armor/midwest
 	name = "midwestern power armor"
-	desc = "(IX) This set of power armor once belonged to the Mid Western branch of the Brotherhood of Steel now residing wherever it's user currently is situated."
+	desc = "(IX) This set of power armor once belonged to the Midwestern branch of the Brotherhood of Steel, and now resides here."
 	icon_state = "midwestgrey_pa"
 	item_state = "midwestgrey_pa"
 	armor = list("tier" = 9, "energy" = 60, "bomb" = 62, "bio" = 100, "rad" = 90, "fire" = 90, "acid" = 0)
@@ -376,14 +382,14 @@
 
 /obj/item/clothing/suit/armor/f13/power_armor/advanced
 	name = "advanced power armor"
-	desc = "An advanced suit of armor typically used by the Enclave.<br>It is composed of lightweight metal alloys, reinforced with ceramic castings at key stress points.<br>Additionally, like the T-51b power armor, it includes a recycling system that can convert human waste into drinkable water, and an air conditioning system for it's user's comfort."
+	desc = "An advanced suit of armor typically used by the Enclave.<br>It is composed of lightweight metal alloys, reinforced with ceramic castings at key stress points.<br>Additionally, like the T-51b power armor, it includes a recycling system that can convert human waste into drinkable water, and an air conditioning system for its user's comfort."
 	icon_state = "advpowerarmor1"
 	item_state = "advpowerarmor1"
 	armor = list("linemelee" = 300, "linebullet" = 300, "linelaser" = 300, "energy" = 75, "bomb" = 72, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 0)
 
 /obj/item/clothing/suit/armor/f13/power_armor/advanced/mk2
 	name = "advanced power armor mark II"
-	desc = "It's an improved model of advanced power armor used exclusively by the Enclave military forces, developed after the Great War.<br>Like its older brother, the standard advanced power armor, it's matte black with a menacing appearance, but with a few significant differences - it appears to be composed entirely of lightweight ceramic composites rather than the usual combination of metal and ceramic plates.<br>Additionally, like the T-51b power armor, it includes a recycling system that can convert human waste into drinkable water, and an air conditioning system for it's user's comfort."
+	desc = "It's an improved model of advanced power armor used exclusively by the Enclave military forces, developed after the Great War.<br>Like its older brother, the standard advanced power armor, it's matte black with a menacing appearance, but with a few significant differences - it appears to be composed entirely of lightweight ceramic composites rather than the usual combination of metal and ceramic plates.<br>Additionally, like the T-51b power armor, it includes a recycling system that can convert human waste into drinkable water, and an air conditioning system for its user's comfort."
 	icon_state = "advpowerarmor2"
 	item_state = "advpowerarmor2"
 	armor = list("linemelee" = 400, "linebullet" = 400, "linelaser" = 400, "energy" = 90, "bomb" = 72, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 0)
@@ -457,15 +463,8 @@
 	item_state = "sulphitearmor"
 	armor = list("tier" = 6, "energy" = 40, "bomb" = 50, "bio" = 60, "rad" = 10, "fire" = 60, "acid" = 20)
 
-/obj/item/clothing/suit/armor/f13/battlecoat
-	name = "battlecoat"
-	desc = "(II) A padded leather coat with gold buttons. For style rather then protection."
-	icon_state = "maxson_battlecoat"
-	item_state = "maxson_battlecoat"
-	armor = list("tier" = 2, "energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-
 /obj/item/clothing/suit/toggle/armor
-	allowed = null
+	body_parts_covered = CHEST|GROIN
 	cold_protection = CHEST|GROIN
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN
@@ -557,7 +556,7 @@
 	name = "hardened midwestern power armor" // PATREON SUPPORTER CUSTOM GEAR, DO NOT USE.
 	icon_state = "midwestpa" // PATREON SUPPORTER CUSTOM GEAR, DO NOT USE.
 	item_state = "midwestpa" // PATREON SUPPORTER CUSTOM GEAR, DO NOT USE.
-	desc = "This set of power armor once belonged to the Mid Western branch of the Brotherhood of Steel now residing wherever it's user currently is situated. This particular one has gone through a chemical hardening process, increasing it's armor capabilities." // PATREON SUPPORTER CUSTOM GEAR, DO NOT USE.
+	desc = "This set of power armor once belonged to the Midwestern branch of the Brotherhood of Steel, and now resides here. This particular one has gone through a chemical hardening process, increasing its armor capabilities." // PATREON SUPPORTER CUSTOM GEAR, DO NOT USE.
 
 obj/item/clothing/suit/armor/f13/exile/cust0m
 	name = "Lorica Iudicis"
@@ -603,6 +602,19 @@ obj/item/clothing/suit/armor/f13/exile/cust0m
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
 
+/obj/item/clothing/suit/armor/f13/shankduster
+	name = "follower's duster"
+	desc = "An old military-grade pre-war combat armor under a white weathered duster. An emblem of the Followers is painted on the back of it. It appears to be fitted with metal plates to replace the crumbling ceramic."
+	icon_state = "shank_follower"
+	item_state = "shank_follower"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	armor = list("tier" = 4, "energy" = 35, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 25, "acid" = 25)
+	strip_delay = 40
+
+/obj/item/clothing/suit/armor/f13/shankduster/Initialize()
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
+
 /obj/item/clothing/suit/toggle/armor/f13/rangercustomdark
 	name = "tattered recon duster"
 	desc = "(III) A thicker than average duster worn by rangers out in the field. This one has been dyed black and appears to be a little more heavily armoured."
@@ -624,12 +636,39 @@ obj/item/clothing/suit/armor/f13/exile/cust0m
 	item_state = "soldier"
 	armor = list("tier" = 3, "energy" = 30, "bomb" = 16, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
 
+/obj/item/clothing/suit/armor/f13/rangercombat/foxcustom
+	name = "sniper riot gear"
+	desc = "A customized and well-worn suit of riot gear with parts of the suit reinforced with leather armor and slain Centurion armor pieces by the wearer. A sniper's veil is wrapped around the neck."
+	icon_state = "foxranger"
+	item_state = "foxranger"
 
+/obj/item/clothing/suit/armor/f13/rangercombat/rigscustom
+	name = "11th armored calvary armor"
+	desc = "A suit of special military grade riot control gear and a duster, worn by 11th Armored Calvary Regiment members in The Divide before the war. Yellow markings are painted on the shoulderpads and forearm guards."
+	icon_state = "rigscustom_suit"
+	item_state = "rigscustom_suit"
 
+/obj/item/clothing/suit/toggle/armor/f13/cloakranger
+	name = "ranger poncho"
+	desc = "(IV) A durable muslin poncho. Tough enough to bear the elements and serve as handy blanket."
+	icon_state = "ranger_cloak"
+	item_state = "ranger_cloak"
+	body_parts_covered = CHEST|GROIN|ARMS
+	armor = list("tier" = 4, "energy" = 20, "bomb" = 25, "bio" = 30, "rad" = 20, "fire" = 60, "acid" = 0) //Same armor as trail ranger gear
+	slowdown = -0.10 //Same speed boost as recon ranger gear. Lower than trail ranger speed to balance it protecting arms.
 
+/obj/item/clothing/suit/armor/f13/herbertranger //Armor wise, it's reskinned raider armor.
+	name = "weathered desert ranger armor"
+	desc = "(IV) A set of pre-unification desert ranger armor, made using parts of what was once USMC riot armor. It looks as if it has been worn for decades; the coat has become discoloured from years under the Mojave sun and has multiple tears and bullet holes in its leather. The armor plating itself seems to be in relatively good shape, though it could do with some maintenance."
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	icon_state = "usmc_riot_gear"
+	item_state = "usmc_riot_gear"
+	armor = list("tier" = 4, "energy" = 35, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 25, "acid" = 25)
+	strip_delay = 40
 
-
-
+/obj/item/clothing/suit/armor/f13/herbertranger/Initialize() //HQ parts reinforcement, just like raider gear
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
 
 //THE GRAVEYARD
 //UNUSED or LEGACY - RETAINED IN CASE DESIRED FOR ADMIN SPAWN OR REIMPLEMENATION. MAY NOT BE EVERYTHING THAT'S UNUSED. TEST BEFORE USING
