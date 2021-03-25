@@ -88,8 +88,8 @@
 /obj/item/clothing/head/helmet/f13/rangerbroken
 	name = "broken riot helmet"
 	icon_state = "ranger_broken"
-	desc = "(V) An old riot police helmet, out of use around the time of the war."
-	armor = list("tier" = 5, "energy" = 50, "bomb" = 39, "bio" = 20, "rad" = 20, "fire" = 30, "acid" = 0)
+	desc = "(VII) An old riot police helmet, out of use around the time of the war."
+	armor = list("tier" = 7, "energy" = 50, "bomb" = 39, "bio" = 20, "rad" = 20, "fire" = 30, "acid" = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
@@ -224,8 +224,33 @@
 	speechspan = SPAN_ROBOT //makes you sound like a robot
 //	darkness_view = 128
 //	lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
+	var/on = FALSE
+	var/brightness_on = 5
+	var/power_on = 1
 	var/emped = 0
 	var/requires_training = TRUE
+
+/obj/item/clothing/head/helmet/f13/power_armor/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/clothing/head/helmet/f13/power_armor/attack_self(mob/living/user)
+	toggle_helmet_light(user)
+
+/obj/item/clothing/head/helmet/f13/power_armor/proc/toggle_helmet_light(mob/living/user)
+	on = !on
+	if(on)
+		turn_on(user)
+	else
+		turn_off(user)
+	update_icon()
+
+/obj/item/clothing/head/helmet/f13/power_armor/proc/turn_on(mob/user)
+	set_light(brightness_on, power_on)
+
+/obj/item/clothing/head/helmet/f13/power_armor/proc/turn_off(mob/user)
+	set_light(0)
+
 
 /obj/item/clothing/head/helmet/f13/power_armor/mob_can_equip(mob/user, mob/equipper, slot, disable_warning = 1)
 	var/mob/living/carbon/human/H = user
@@ -265,7 +290,7 @@
 	desc = "(VIII) It's a salvaged T-45b power armor helmet."
 	icon_state = "t45bhelmet"
 	item_state = "t45bhelmet"
-	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0)
+	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0, "wound" = 40)
 //	darkness_view = 0
 
 	requires_training = FALSE
@@ -275,7 +300,7 @@
 	desc = "(VIII) This power armor helmet is so decrepit and battle-worn that it have lost most of its capability to protect the wearer from harm. This helmet seems to be heavily modified, heavy metal banding fused to the helmet"
 	icon_state = "raiderpa_helm"
 	item_state = "raiderpa_helm"
-	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0)
+	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0, "wound" = 40)
 
 	requires_training = FALSE
 
@@ -284,18 +309,28 @@
 	desc = "(VIII) This power armor helmet is so decrepit and battle-worn that it have lost most of its capability to protect the wearer from harm."
 	icon_state = "t45hotrod_helm"
 	item_state = "t45hotrod_helm"
-	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0)
+	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0, "wound" = 40)
 
 	requires_training = FALSE
+
+/obj/item/clothing/head/helmet/f13/power_armor/vaulttec
+	name = "Vault-Tec power helmet"
+	desc = "(VIII) A refined suit of power armour, purpose-built by the residents of Vault-115 in order to better keep the peace in their new settlement."
+	icon_state = "vaultpahelm"
+	item_state = "vaultpahelm"
+	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0, "wound" = 40)
 
 /obj/item/clothing/head/helmet/f13/power_armor/t45d
 	name = "T-45d power helmet"
 	desc = "(IX) It's an old pre-War power armor helmet. It's pretty hot inside of it."
-	icon_state = "t45dhelmet"
-	item_state = "t45dhelmet"
-	armor = list("tier" = 9, "energy" = 60, "bomb" = 62, "bio" = 100, "rad" = 90, "fire" = 90, "acid" = 0)
-	var/brightness_on = 4 //luminosity when the light is on
-	var/on = 0
+	icon_state = "t45dhelmet0"
+	item_state = "t45dhelmet0"
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+	armor = list("tier" = 9, "energy" = 60, "bomb" = 62, "bio" = 100, "rad" = 90, "fire" = 90, "acid" = 0, "wound" = 60)
+
+/obj/item/clothing/head/helmet/f13/power_armor/t45d/update_icon_state()
+	icon_state = "t45dhelmet[on]"
+	item_state = "t45dhelmet[on]"
 
 /obj/item/clothing/head/helmet/f13/power_armor/t45d/gunslinger
 	name = "Gunslinger T-51b Helm"
@@ -304,32 +339,47 @@
 	item_state = "t51bgs"
 	slowdown = 0
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	actions_types = list()
+
+/obj/item/clothing/head/helmet/f13/power_armor/t45d/sierra
+	name = "sierra power helmet"
+	desc = "(IX) A pre-war power armor helmet, issued to special NCR officers.."
+	icon_state = "sierra"
+	item_state = "sierra"
+	actions_types = list()
 
 /obj/item/clothing/head/helmet/f13/power_armor/midwest
 	name = "midwestern power helmet"
 	desc = "(IX) This helmet once belonged to the Midwestern branch of the Brotherhood of Steel, and now resides here."
 	icon_state = "midwestgrey_helm"
 	item_state = "midwestgrey_helm"
-	armor = list("tier" = 9, "energy" = 60, "bomb" = 62, "bio" = 100, "rad" = 90, "fire" = 90, "acid" = 0)
+	armor = list("tier" = 9, "energy" = 60, "bomb" = 62, "bio" = 100, "rad" = 90, "fire" = 90, "acid" = 0, "wound" = 60)
 
 /obj/item/clothing/head/helmet/f13/power_armor/t51b
 	name = "T-51b power helmet"
 	desc = "(X) It's a T-51b power helmet, typically used by the Brotherhood. It looks somewhat charming."
-	icon_state = "t51bhelmet"
-	item_state = "t51bhelmet"
-	armor = list("tier" = 10, "energy" = 65, "bomb" = 62, "bio" = 100, "rad" = 99, "fire" = 90, "acid" = 0)
+	icon_state = "t51bhelmet0"
+	item_state = "t51bhelmet0"
+	armor = list("tier" = 10, "energy" = 65, "bomb" = 62, "bio" = 100, "rad" = 99, "fire" = 90, "acid" = 0, "wound" = 70)
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+
+/obj/item/clothing/head/helmet/f13/power_armor/t51b/update_icon_state()
+	icon_state = "t51bhelmet[on]"
+	item_state = "t51bhelmet[on]"
 
 /obj/item/clothing/head/helmet/f13/power_armor/t51b/wbos
 	name = "Washington power helmet"
 	desc = "(X) It's a Washington Brotherhood power helmet. It looks somewhat terrifying."
 	icon_state = "t51wboshelmet"
 	item_state = "t51wboshelmet"
+	actions_types = list()
 
 /obj/item/clothing/head/helmet/f13/power_armor/t51b/reforgedwbos
 	name = "reforged Washington power helmet"
 	desc = "(X) It's a reforged Washington Brotherhood power helmet, designed to induce fear in a target."
 	icon_state = "t51matthelmet"
 	item_state = "t51matthelmet"
+	actions_types = list()
 
 /obj/item/clothing/head/helmet/f13/power_armor/t51b/ultra
 	name = "Ultracite power helmet"
@@ -337,15 +387,19 @@
 	icon_state = "ultracitepa_helm"
 	item_state = "ultracitepa_helm"
 	slowdown = 0
+	actions_types = list()
 
 /obj/item/clothing/head/helmet/f13/power_armor/t60
 	name = "T-60a power helmet"
 	desc = "(XI) The T-60 powered helmet, equipped with targetting software suite, Friend-or-Foe identifiers, dynamic HuD, and an internal music player."
-	icon_state = "t60helmet"
-	item_state = "t60helmet"
-	armor = list("tier" = 11, "energy" = 70, "bomb" = 82, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 0)
-	var/brightness_on = 4 //luminosity when the light is on
-	var/on = 0
+	icon_state = "t60helmet0"
+	item_state = "t60helmet0"
+	armor = list("tier" = 11, "energy" = 70, "bomb" = 82, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 0, "wound" = 80)
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+
+/obj/item/clothing/head/helmet/f13/power_armor/t60/update_icon_state()
+	icon_state = "t60helmet[on]"
+	item_state = "t60helmet[on]"
 
 /obj/item/clothing/head/helmet/f13/power_armor/excavator
 	name = "excavator power helmet"
@@ -353,22 +407,20 @@
 	icon_state = "excavator"
 	item_state = "excavator"
 	armor = list("tier" = 8, "energy" = 60, "bomb" = 62, "bio" = 100, "rad" = 90, "fire" = 90, "acid" = 0)
-	var/brightness_on = 4 //luminosity when the light is on
-	var/on = 0
 
 /obj/item/clothing/head/helmet/f13/power_armor/advanced
 	name = "advanced power helmet"
 	desc = "It's an advanced power armor Mk I helmet, typically used by the Enclave. It looks somewhat threatening."
 	icon_state = "advhelmet1"
 	item_state = "advhelmet1"
-	armor = list("linemelee" = 300, "linebullet" = 300, "linelaser" = 300, "energy" = 75, "bomb" = 72, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 0)
+	armor = list("linemelee" = 300, "linebullet" = 300, "linelaser" = 300, "energy" = 75, "bomb" = 72, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 0, "wound" = 90)
 
 /obj/item/clothing/head/helmet/f13/power_armor/advanced/mk2
 	name = "advanced power helmet MK2"
 	desc = "It's an improved model of advanced power armor used exclusively by the Enclave military forces, developed after the Great War.<br>Like its older brother, the standard advanced power armor, it's matte black with a menacing appearance, but with a few significant differences - it appears to be composed entirely of lightweight ceramic composites rather than the usual combination of metal and ceramic plates.<br>Additionally, like the T-51b power armor, it includes a recycling system that can convert human waste into drinkable water, and an air conditioning system for its user's comfort."
 	icon_state = "advhelmet2"
 	item_state = "advhelmet2"
-	armor = list("linemelee" = 400, "linebullet" = 400, "linelaser" = 400, "energy" = 90, "bomb" = 72, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 0)
+	armor = list("linemelee" = 400, "linebullet" = 400, "linelaser" = 400, "energy" = 90, "bomb" = 72, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 0, "wound" = 100)
 
 /obj/item/clothing/head/helmet/f13/power_armor/advanced/mk2/wbos
 	name = "advanced Washington power helmet"
@@ -381,7 +433,7 @@
 	desc = "A helmet typically used by Enclave special forces.<br>There are three orange energy capacitors on the side."
 	icon_state = "tesla"
 	item_state = "tesla"
-	armor = list("linemelee" = 200, "linebullet" = 200, "linelaser" = 300, "energy" = 95, "bomb" = 62, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 0)
+	armor = list("linemelee" = 200, "linebullet" = 200, "linelaser" = 300, "energy" = 95, "bomb" = 62, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 0, "wound" = 80)
 	var/hit_reflect_chance = 35
 	var/list/protected_zones = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 

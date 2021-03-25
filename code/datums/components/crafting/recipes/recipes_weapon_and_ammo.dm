@@ -171,8 +171,8 @@
 	reqs = list(/datum/reagent/fuel = 50,
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/assembly/igniter = 1,
-				/obj/item/reagent_containers/food/drinks/soda_cans = 1)
-	parts = list(/obj/item/reagent_containers/food/drinks/soda_cans = 1)
+				/obj/item/reagent_containers/food/drinks/bottle = 1)
+	parts = list(/obj/item/reagent_containers/food/drinks/bottle = 1)
 	time = 15
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -460,6 +460,21 @@
 /datum/crafting_recipe/servicerifle
 	name = "service rifle"
 	result = /obj/item/gun/ballistic/automatic/service
+	reqs = list(/obj/item/stack/sheet/metal = 5,
+				/obj/item/stack/crafting/metalparts = 10,
+				/obj/item/stack/sheet/mineral/wood = 5,
+				/obj/item/stack/crafting/goodparts = 5
+				)
+	tools = list(TOOL_WORKBENCH)
+	time = 120
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+	always_availible = FALSE
+
+//scout carbine
+/datum/crafting_recipe/scoutcarbine
+	name = "scout carbine"
+	result = /obj/item/gun/ballistic/automatic/service/carbine
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/crafting/metalparts = 10,
 				/obj/item/stack/sheet/mineral/wood = 5,

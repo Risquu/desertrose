@@ -20,9 +20,6 @@
 	var/ranged_attack_speed = CLICK_CD_RANGE
 
 	var/fire_sound = "gunshot"
-	var/suppressed = null					//whether or not a message is displayed when fired
-	var/can_suppress = FALSE
-	var/can_unsuppress = TRUE
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = TRUE
 	var/obj/item/ammo_casing/chambered = null
@@ -59,6 +56,7 @@
 	var/obj/item/attachments/recoil_decrease
 	var/obj/item/attachments/burst_improvement
 	var/obj/item/attachments/bullet_speed
+	var/obj/item/attachments/auto_sear
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -82,6 +80,13 @@
 	var/datum/action/item_action/toggle_gunlight/alight
 	var/mutable_appearance/flashlight_overlay
 	var/can_attachments = FALSE
+	var/can_automatic = FALSE
+
+	var/mutable_appearance/suppressor_overlay
+	var/suppressor_state = "suppressor"
+	var/suppressed = null					//whether or not a message is displayed when fired
+	var/can_suppress = FALSE
+	var/can_unsuppress = TRUE
 
 	var/ammo_x_offset = 0 //used for positioning ammo count overlay on sprite
 	var/ammo_y_offset = 0
@@ -89,11 +94,10 @@
 	var/flight_y_offset = 0
 	var/knife_x_offset = 0
 	var/knife_y_offset = 0
-
 	var/scope_x_offset = 0
 	var/scope_y_offset = 0
-
-	var/scopestate = "scope"
+	var/suppressor_x_offset = 0
+	var/suppressor_y_offset = 0
 
 	var/equipsound = 'sound/f13weapons/equipsounds/pistolequip.ogg'
 	var/isenergy = null
@@ -113,7 +117,9 @@
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 //	var/projectile_damage_multiplier = 1
 
-	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
+/*
+	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds 
+*/ //Disabled because automatic fire is buggy and a bit OP.
 
 /obj/item/gun/Initialize()
 	. = ..()
@@ -411,7 +417,7 @@
 		else //Smart spread
 			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread), 1)
 		before_firing(target,user)
-		if(!chambered.fire_casing(target, user, params,suppressed, zone_override, sprd, extra_damage, extra_penetration))
+		if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, extra_damage, extra_penetration, src))
 			shoot_with_empty_chamber(user)
 			firing = FALSE
 			return FALSE
@@ -429,35 +435,6 @@
 	process_chamber(user)
 	update_icon()
 	return TRUE
-
-/obj/item/gun/proc/combine_items(mob/user, obj/item/gun/A, obj/item/gun/B, obj/item/gun/C)
-
-//	if (B.bullet_speed)
-//		C.desc += " It has an improved barrel installed."
-//		C.projectile_speed -= 0.15
-	if (B.recoil_decrease)
-		C.desc += " It has a recoil compensator installed."
-		if (C.spread > 8)
-			C.spread -= 8
-		else
-			C.spread = 0
-
-	for(var/obj/item/D in B.contents)//D - old item
-		if(istype(D,/obj/item/attachments))
-			user.transferItemToLoc(D,C)//old attmns to new gun
-			if(istype(D,/obj/item/attachments/bullet_speed))
-				C.bullet_speed = D
-			if(istype(D,/obj/item/attachments/recoil_decrease))
-				C.recoil_decrease = D
-		if(istype(D,/obj/item/ammo_box/magazine))
-			for(var/obj/item/ammo_box/magazine/X in C.contents)
-				var/obj/item/ammo_box/magazine/oldmag = D
-				X.stored_ammo = oldmag.stored_ammo
-				X.contents = oldmag.contents
-
-	qdel(A)
-	qdel(B)
-	user.put_in_hand(C,user.active_hand_index)
 
 /obj/item/gun/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -486,30 +463,10 @@
 		to_chat(user, "<span class='notice'>You attach \the [K] to the front of \the [src].</span>")
 		bayonet = K
 		update_icon()
+		update_overlays()
 	else if(istype(I, /obj/item/attachments/scope))
 		if(!can_scope)
 			return ..()
-		//trail carbine, brush gun, cowboy repeater, .44 revolver, rangemaster, hunting rifle
-		if (istype(src, /obj/item/gun/ballistic/revolver/m29))//weapons with existing scoped variants
-			combine_items(user,I,src, new /obj/item/gun/ballistic/revolver/m29/scoped)//44 revolver
-			return
-		if (istype(src, /obj/item/gun/ballistic/shotgun/automatic/hunting/cowboy))
-			combine_items(user,I,src, new /obj/item/gun/ballistic/shotgun/automatic/hunting/cowboy/scoped)//cowboy repeater
-			return
-		if (istype(src, /obj/item/gun/ballistic/shotgun/automatic/hunting/trail))
-			combine_items(user,I,src, new /obj/item/gun/ballistic/shotgun/automatic/hunting/trail)//trail carbine
-			return
-		if (istype(src, /obj/item/gun/ballistic/shotgun/automatic/hunting/brush))
-			combine_items(user,I,src, new /obj/item/gun/ballistic/shotgun/automatic/hunting/brush/scoped)//brush gun
-			return
-		if (istype(src, /obj/item/gun/ballistic/automatic/rangemaster))
-			combine_items(user,I,src, new /obj/item/gun/ballistic/automatic/rangemaster/scoped)//rangemaster
-			return
-		if (istype(src, /obj/item/gun/ballistic/shotgun/remington))
-			combine_items(user,I,src, new /obj/item/gun/ballistic/shotgun/remington/scoped)//hunting rifle
-			return
-//		if (istype(src,/obj/item/gun/ballistic/shotgun/ww2rifle))
-//			combine_items(user,I,src, new /obj/item/gun/ballistic/shotgun/ww2rifle/scoped)//kar98
 		var/obj/item/attachments/scope/C = I
 		if(!scope)
 			if(!user.transferItemToLoc(I, src))
@@ -520,6 +477,7 @@
 			src.zoom_amt = 10
 			src.zoom_out_amt = 13
 			src.build_zooming()
+			update_overlays()
 			update_icon()
 	else if(istype(I, /obj/item/attachments/recoil_decrease))
 		var/obj/item/attachments/recoil_decrease/R = I
@@ -648,12 +606,10 @@
 		flashlight_overlay = null
 
 	if(bayonet)
-		var/mutable_appearance/knife_overlay
-		var/state = "bayonet"							//Generic state.
 		if(bayonet.icon_state in icon_states('icons/obj/guns/bayonets.dmi'))		//Snowflake state?
-			state = bayonet.icon_state
+			knife_overlay = bayonet.icon_state
 		var/icon/bayonet_icons = 'icons/obj/guns/bayonets.dmi'
-		knife_overlay = mutable_appearance(bayonet_icons, state)
+		knife_overlay = mutable_appearance(bayonet_icons, bayonet_state)
 		knife_overlay.pixel_x = knife_x_offset
 		knife_overlay.pixel_y = knife_y_offset
 		. += knife_overlay
@@ -664,12 +620,21 @@
 		if(scope.icon_state in icon_states('icons/obj/guns/scopes.dmi'))
 			scope_overlay = scope.icon_state
 		var/icon/scope_icons = 'icons/obj/guns/scopes.dmi'
-		scope_overlay = mutable_appearance(scope_icons, scopestate)
+		scope_overlay = mutable_appearance(scope_icons, scope_state)
 		scope_overlay.pixel_x = scope_x_offset
 		scope_overlay.pixel_y = scope_y_offset
 		. += scope_overlay
 	else
 		scope_overlay = null
+
+	if(suppressed)
+		var/icon/suppressor_icons = 'icons/obj/guns/suppressors.dmi'
+		suppressor_overlay = mutable_appearance(suppressor_icons, suppressor_state)
+		suppressor_overlay.pixel_x = suppressor_x_offset
+		suppressor_overlay.pixel_y = suppressor_y_offset
+		. += suppressor_overlay
+	else
+		suppressor_overlay = null
 
 /obj/item/gun/item_action_slot_check(slot, mob/user, datum/action/A)
 	if(istype(A, /datum/action/item_action/toggle_scope_zoom) && slot != SLOT_HANDS)

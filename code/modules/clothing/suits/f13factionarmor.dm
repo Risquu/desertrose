@@ -346,6 +346,13 @@
 	item_state = "ncr_captain_armour"
 	armor = list("tier" = 7, "energy" = 20, "bomb" = 50, "bio" = 30, "rad" = 20, "fire" = 60, "acid" = 0)
 
+/obj/item/clothing/suit/armor/f13/ncrarmor/lieutenant
+	name = "NCR officer vest"
+	desc = "(VII) A reinforced set of NCR mantle armour, with added padding on the groin, neck, limbs and shoulders. Intended for use by the officer class."
+	icon_state = "ncr_lt_armour"
+	item_state = "ncr_lt_armour"
+	armor = list("tier" = 7, "energy" = 20, "bomb" = 50, "bio" = 30, "rad" = 20, "fire" = 60, "acid" = 0)
+
 /obj/item/clothing/suit/armor/f13/ncrarmor/scout
 	name = "NCR 3rd Scout combat armor"
 	desc = "(V) A specialized variant of combat armor issued to members of the 3rd Scout Battalion."
@@ -482,6 +489,13 @@
 	icon_state = "brotherhood_armor_mk2"
 	item_state = "brotherhood_armor_mk2"
 	armor = list("tier" = 6, "energy" = 45, "bomb" = 55, "bio" = 60, "rad" = 15, "fire" = 60, "acid" = 30)
+
+/obj/item/clothing/suit/armor/f13/combat/brotherhood/outcast
+	name = "brotherhood armor"
+	desc = "(VII) A superior combat armor set made by the Brotherhood of Steel, bearing a series of red markings."
+	icon_state = "brotherhood_armor_outcast"
+	item_state = "brotherhood_armor_outcast"
+	armor = list("tier" = 7, "energy" = 45, "bomb" = 60, "bio" = 60, "rad" = 15, "fire" = 60, "acid" = 30)
 
 //Oasis/Town
 /obj/item/clothing/suit/armor/f13/town
