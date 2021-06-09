@@ -509,7 +509,6 @@
 	burst_shot_delay = 3
 	can_suppress = FALSE
 	can_attachments = TRUE
-	spawnwithmagazine = FALSE
 	spread = 10
 	can_suppress = TRUE
 	suppressor_state = "uzi_suppressor"
@@ -517,7 +516,6 @@
 	suppressor_y_offset = 19
 
 /obj/item/gun/ballistic/automatic/smg10mm
-	spawnwithmagazine = FALSE
 	name = "10mm submachine gun"
 	desc = "One of the most common personal-defense weapons of the Great War, a sturdy and reliable open-bolt 10mm submachine gun."
 	icon_state = "smg10mm"
@@ -533,7 +531,6 @@
 	burst_shot_delay = 2.5
 	can_suppress = FALSE //we dont have sprites therefore cease
 	can_attachments = TRUE
-	spawnwithmagazine = FALSE
 	spread = 18
 	can_suppress = TRUE
 	suppressor_state = "10mm_suppressor"
@@ -553,7 +550,6 @@
 	burst_shot_delay = 2
 	can_suppress = FALSE
 	can_attachments = TRUE
-	spawnwithmagazine = FALSE
 	extra_damage = -4
 	can_scope = TRUE
 	scope_state = "AEP7_scope"
@@ -563,7 +559,7 @@
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "uzi"
-	desc = "A lightweight, burst-fire submachien gun, for when you really want someone dead. Uses 9mm rounds."
+	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
 	icon_state = "mini-uzi"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 	w_class = WEIGHT_CLASS_NORMAL
@@ -574,7 +570,6 @@
 	burst_shot_delay = 2
 	can_suppress = TRUE
 	can_attachments = TRUE
-	spawnwithmagazine = FALSE
 	can_scope = TRUE
 	scope_state = "AEP7_scope"
 	scope_x_offset = 9
@@ -597,7 +592,6 @@
 	fire_delay = 4
 	burst_shot_delay = 3
 	can_attachments = TRUE
-	spawnwithmagazine = FALSE
 	can_bayonet = TRUE
 	bayonet_state = "rifles"
 	knife_x_offset = 23
@@ -619,6 +613,7 @@
 	can_unsuppress = FALSE
 	suppressed = 1
 	fire_delay = 3
+	burst_shot_delay = 2
 	fire_sound = 'sound/weapons/Gunshot_large_silenced.ogg'
 	can_bayonet = FALSE
 	force = 15
@@ -634,7 +629,7 @@
 	item_state = "servicerifle"
 	fire_sound = 'sound/f13weapons/varmint_rifle.ogg'
 	mag_type = /obj/item/ammo_box/magazine/m556/rifle
-	fire_delay = 5
+	fire_delay = 2
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 	can_bayonet = TRUE
@@ -660,6 +655,7 @@
 	scope_x_offset = 4
 	scope_y_offset = 15
 	extra_damage = -4
+	fire_delay = 2
 	suppressor_x_offset = 26
 	suppressor_y_offset = 28
 
@@ -684,16 +680,21 @@
 	icon_state = "R82"
 	item_state = "R84"
 	//automatic = 1
-	burst_size = 2
-	fire_delay = 3
+	spread = 3
+	burst_size = 1
 	automatic_burst_overlay = TRUE
 	actions_types = list(/datum/action/item_action/toggle_firemode)
-	semi_auto = FALSE
+	semi_auto = TRUE
 	burst_shot_delay = 2.2 //Was 2 before.
 	can_suppress = TRUE
+	can_automatic = TRUE
+	can_scope = TRUE
 	suppressor_state = "rifle_suppressor"
 	suppressor_x_offset = 27
 	suppressor_y_offset = 28
+	scope_state = "smallrifle_scope"
+	scope_x_offset = 5
+	scope_y_offset = 13
 
 /obj/item/gun/ballistic/automatic/marksman
 	name = "marksman carbine"
@@ -703,9 +704,8 @@
 	mag_type = /obj/item/ammo_box/magazine/m556/rifle
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
-	fire_delay = 4
+	fire_delay = 5
 	can_attachments = TRUE
-	spawnwithmagazine = FALSE
 	can_bayonet = TRUE
 	bayonet_state = "rifles"
 	knife_x_offset = 22
@@ -733,10 +733,8 @@
 	mag_type = /obj/item/ammo_box/magazine/m556/rifle
 	extra_damage = 0
 	extra_penetration = 0
-	fire_delay = 8
+	fire_delay = 6
 	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_HEAVY
-	spawnwithmagazine = FALSE
 	can_bayonet = FALSE
 	can_suppress = TRUE
 	can_attachments = TRUE
@@ -805,7 +803,6 @@
 	can_scope = TRUE
 	can_bayonet = TRUE
 	bayonet_state = "lasmusket"
-	spawnwithmagazine = FALSE
 	knife_x_offset = 24
 	knife_y_offset = 21
 	burst_size = 1
@@ -815,7 +812,7 @@
 	scope_x_offset = 4
 	scope_y_offset = 11
 	can_suppress = TRUE
-	scope_state = "rifle_suppressor"
+	suppressor_state = "rifle_suppressor"
 	suppressor_x_offset = 27
 	suppressor_y_offset = 27
 	//automatic = 0
@@ -845,7 +842,7 @@
 	item_state = "rifle"
 	mag_type = /obj/item/ammo_box/magazine/garand308
 	fire_sound = 'sound/f13weapons/hunting_rifle.ogg'
-	fire_delay = 6
+	fire_delay = 4
 	burst_size = 1
 	en_bloc = 1
 	auto_eject = 1
@@ -888,10 +885,10 @@
 	fire_sound = 'sound/f13weapons/hunting_rifle.ogg'
 	fire_delay = 10
 	burst_size = 1
-	//projectile_speed = 0
 	can_bayonet = FALSE
 	semi_auto = TRUE
 	can_automatic = FALSE
+	extra_speed = TILES_TO_PIXELS(85) //Hitscan with an improved barrel installed.
 
 /obj/item/gun/ballistic/automatic/m1garand/republicspride
 	name = "Republic's Pride"
@@ -997,6 +994,8 @@
 	icon_state = "gold_sniper"
 	item_state = "gold_sniper"
 
+
+
 /obj/item/gun/ballistic/automatic/autopipe
 	name = "\improper auto pipe rifle"
 	desc = "An improvised rifle improved with automatic capability, highly innacurate and slow to fire"
@@ -1011,6 +1010,7 @@
 	burst_size = 4
 	fire_delay = 30
 	burst_shot_delay = 3
+	sawn_desc = "An improvised rifle improved with automatic capability, highly innacurate and slow to fire. This one has been sawn off"
 	//automatic = 1
 	spread = 24
 
@@ -1229,16 +1229,17 @@
 	desc = "An integrally suppressed bolt action carbine, perfect for quiet varmint hunting. Uses .45 pistol magazines."
 	icon_state = "delisle"
 	item_state = "varmintrifle"
-	mag_type = /obj/item/ammo_box/magazine/m45
+	mag_type = /obj/item/ammo_box/magazine/greasegun
 	extra_damage = 3
 	extra_penetration = 0.06
-	fire_delay = 6
+	fire_delay = 4.5
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 	can_suppress = FALSE
 	can_unsuppress = FALSE
 	suppressed = 1
-	can_attachments = FALSE
+	can_attachments = TRUE
+	can_automatic = TRUE
 	burst_size = 1
 	automatic_burst_overlay = FALSE
 	//automatic = 0
@@ -1319,6 +1320,8 @@
 	zoom_out_amt = 13
 	can_attachments = TRUE
 	can_scope = FALSE
+	extra_damage = 1.2
+	fire_sound = 'sound/f13weapons/assault_carbine.ogg'
 
 /obj/item/gun/ballistic/automatic/lsw
 	name = "light support weapon"
@@ -1419,3 +1422,95 @@
 	//automatic = 1
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
+
+/obj/item/gun/ballistic/automatic/m2a1
+	name = "Browning M2A1"
+	desc = "An old pre-war heavy machine gun used in service by the US Military around the time of the war."
+	icon_state = "M38"
+	item_state = "M38"
+	slot_flags = 0
+	//automatic = 1
+	mag_type = /obj/item/ammo_box/magazine/mm50
+	fire_sound = 'sound/f13weapons/antimaterielfire.ogg'
+	can_suppress = FALSE
+	burst_size = 1
+	fire_delay = 3
+	slowdown = 1
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+	spread = 20
+	var/cover_open = FALSE
+
+/obj/item/gun/ballistic/automatic/m2a1/update_icon()
+	icon_state = "m2a1[cover_open ? "open" : "closed"][magazine ? CEILING(get_ammo(0)/20, 1)*20 : "-empty"]"
+	item_state = "m2a1[cover_open ? "open" : "closed"][magazine ? "mag" : "nomag"]"
+
+/obj/item/gun/ballistic/automatic/m2a1/examine(mob/user)
+	. = ..()
+	if(cover_open && magazine)
+		. += "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>"
+
+/obj/item/gun/ballistic/automatic/m2a1/attack_self(mob/user)
+	cover_open = !cover_open
+	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
+	if(cover_open)
+		playsound(user, 'sound/weapons/sawopen.ogg', 60, 1)
+	else
+		playsound(user, 'sound/weapons/sawclose.ogg', 60, 1)
+	update_icon()
+
+/obj/item/gun/ballistic/automatic/m2a1/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+	if(cover_open)
+		to_chat(user, "<span class='warning'>[src]'s cover is open! Close it before firing!</span>")
+	else
+		. = ..()
+		update_icon()
+
+/obj/item/gun/ballistic/automatic/m2a1/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	if(loc != user)
+		..()
+		return	//let them pick it up
+	if(!cover_open || (cover_open && !magazine))
+		..()
+	else if(cover_open && magazine)
+		//drop the mag
+		magazine.update_icon()
+		magazine.forceMove(drop_location())
+		user.put_in_hands(magazine)
+		magazine = null
+		update_icon()
+		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
+		playsound(user, 'sound/weapons/magout.ogg', 60, 1)
+
+/obj/item/gun/ballistic/automatic/m2a1/attackby(obj/item/A, mob/user, params)
+	if(!cover_open && istype(A, mag_type))
+		to_chat(user, "<span class='warning'>[src]'s cover is closed! You can't insert a new mag.</span>")
+		return
+	..()
+
+/obj/item/gun/ballistic/automatic/m2a1/burst_select()
+	var/mob/living/carbon/human/user = usr
+	switch(select)
+		if(0)
+			select += 1
+			burst_size = 2
+			spread = 30
+			to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
+		if(1)
+			select += 1
+			burst_size = 3
+			spread = 40
+			to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
+		if(2)
+			select += 1
+			burst_size = 4
+			spread = 50
+			to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
+		if(3)
+			select = 0
+			burst_size = 1
+			spread = 20
+			to_chat(user, "<span class='notice'>You switch to semi-automatic.</span>")
+	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	update_icon()
+	return

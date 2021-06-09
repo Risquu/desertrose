@@ -31,7 +31,7 @@
 	name = "NCR fatigue pants"
 	path = /obj/item/clothing/under/f13/ncr/pants
 	restricted_desc = "NCR"
-	restricted_roles = list("NCR Captain", 
+	restricted_roles = list("NCR Captain",
 							"NCR Lieutenant",
 							"NCR Medical Officer",
 							"NCR Veteran Ranger",
@@ -44,7 +44,29 @@
 							"NCR Trooper",
 							"NCR Rear Echelon",
 							"NCR Off-Duty",
-							"NCR Ranger"
+							"NCR Ranger",
+							"NCR Recruit"
+						)
+
+/datum/gear/uniform/ncr_shorts
+	name = "NCR fatigue shorts"
+	path = /obj/item/clothing/under/f13/ncr/ncr_shorts
+	restricted_desc = "NCR"
+	restricted_roles = list("NCR Captain",
+							"NCR Lieutenant",
+							"NCR Medical Officer",
+							"NCR Veteran Ranger",
+							"NCR Lieutenant",
+							"NCR Sergeant First Class",
+							"NCR Sergeant",
+							"NCR Corporal",
+							"NCR Combat Engineer",
+							"NCR Combat Medic",
+							"NCR Trooper",
+							"NCR Rear Echelon",
+							"NCR Off-Duty",
+							"NCR Ranger",
+							"NCR Recruit"
 						)
 
 /datum/gear/uniform/ranger
@@ -64,6 +86,24 @@
 /datum/gear/uniform/ranger/vet
 	name = "ranger flannel outfit"
 	path = /obj/item/clothing/under/f13/ranger/vet
+
+/datum/gear/uniform/brotherhood
+	name = "brotherhood fatigues"
+	path = /obj/item/clothing/under/f13/bos/fatigues
+	restricted_desc = "BoS"
+	restricted_roles = list(
+							"Head Paladin",
+							"Head Knight",
+							"Head Scribe",
+							"Star Paladin",
+							"Star Knight",
+							"Proctor",
+							"Paladin",
+							"Knight",
+							"Scribe",
+							"Initiate",
+							"BoS Off-Duty"
+	)
 
 /datum/gear/uniform/rustic
 	name = "rustic outfit"

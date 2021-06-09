@@ -85,6 +85,19 @@
 	name = "reinforced combat helmet"
 	color = "#302E2E" // Dark Grey
 
+/obj/item/clothing/head/helmet/f13/combat/mk2/raider
+	name = "customized raider combat helmet"
+	desc = "(VI) A reinforced combat helmet painted black with the laser designator removed."
+	icon_state = "combat_helmet_raider"
+	item_state = "combat_helmet_raider"
+
+/obj/item/clothing/head/helmet/f13/combat/marine
+	name = "marine combat helmet"
+	desc = "(VIII) An excellent helmet of pre-war U.S.M.C. armor found in rare and limited quantities in the wasteland. Surpassed only by newer suits of power armor."
+	icon_state = "marinehelmet"
+	item_state = "marinehelmet"
+	armor = list("tier" = 8, "energy" = 45, "bomb" = 55, "bio" = 60, "rad" = 60, "fire" = 60, "acid" = 50)
+
 /obj/item/clothing/head/helmet/f13/rangerbroken
 	name = "broken riot helmet"
 	icon_state = "ranger_broken"
@@ -96,6 +109,12 @@
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
 	flash_protect = 1
+
+/obj/item/clothing/head/helmet/f13/rangerbroken/fox
+	name = "broken reclaimed ranger-hunter helmet"
+	desc = "(VII) A riot helmet once cared and loved by it's owner, now an old combat relic. A large entry and exit hole is on the top of the helmet, 'DE OPPRESSO LIBER' is also stenciled on the top of the helmet, along with what seems to be faded whiskers painted on the front."
+	icon_state = "foxranger_broken"
+	item_state = "foxranger_broken"
 
 /obj/item/clothing/head/helmet/f13/combat/swat
 	name = "SWAT combat helmet"
@@ -116,6 +135,18 @@
 /obj/item/clothing/head/helmet/f13/combat/environmental/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
+
+/obj/item/clothing/head/helmet/f13/ahp_helmet
+	name = "highway patrol helmet"
+	desc = "(IV) An old police motorcycle helmet with the logo of the 'Arizona Department of Public Safety' emblazoned on the front."
+	icon_state = "ahp_helmet"
+	item_state = "ahp_helmet"
+	armor = list("tier" = 4, "energy" = 25, "bomb" = 30, "bio" = 20, "rad" = 0, "fire" = 50, "acid" = 0)
+	strip_delay = 40
+
+/obj/item/clothing/head/helmet/f13/ahp_helmet/Initialize() //HQ parts reinforcement
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
 
 //Sulphite Helm
 
@@ -222,6 +253,10 @@
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
 	speechspan = SPAN_ROBOT //makes you sound like a robot
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 //	darkness_view = 128
 //	lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 	var/on = FALSE
@@ -229,6 +264,9 @@
 	var/power_on = 1
 	var/emped = 0
 	var/requires_training = TRUE
+	var/armor_block_chance = 0
+	var/list/protected_zones = list(BODY_ZONE_HEAD)
+	var/deflection_chance = 0
 
 /obj/item/clothing/head/helmet/f13/power_armor/ComponentInitialize()
 	. = ..()
@@ -256,7 +294,7 @@
 	var/mob/living/carbon/human/H = user
 	if(src == H.head) //Suit is already equipped
 		return ..()
-	if (!HAS_TRAIT(H, TRAIT_PA_WEAR) && !istype(src, /obj/item/clothing/head/helmet/f13/power_armor/t45b) && slot == SLOT_HEAD && requires_training)
+	if (!HAS_TRAIT(H, TRAIT_PA_WEAR) && slot == SLOT_HEAD && requires_training)
 		to_chat(user, "<span class='warning'>You don't have the proper training to operate the power armor!</span>")
 		return 0
 	if(slot == SLOT_HEAD)
@@ -285,6 +323,19 @@
 				armor = armor.modifyRating(linemelee = 50, linebullet = 50, linelaser = 50)
 				emped = 0
 
+/obj/item/clothing/head/helmet/f13/power_armor/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(check_armor_penetration(object) <= 0.15 && (attack_type == ATTACK_TYPE_PROJECTILE) && (def_zone in protected_zones))
+		if(prob(armor_block_chance))
+			var/ratio = rand(0,100)
+			if(ratio <= deflection_chance)
+				block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_DEFLECT
+				return BLOCK_SHOULD_REDIRECT | BLOCK_REDIRECTED | BLOCK_SUCCESS | BLOCK_PHYSICAL_INTERNAL
+			if(ismob(loc))
+				to_chat(loc, "<span class='warning'>Your power armor absorbs the projectile's impact!</span>")
+			block_return[BLOCK_RETURN_SET_DAMAGE_TO] = 0
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_INTERNAL
+	return ..()
+
 /obj/item/clothing/head/helmet/f13/power_armor/t45b
 	name = "salvaged T-45b helmet"
 	desc = "(VIII) It's a salvaged T-45b power armor helmet."
@@ -292,8 +343,16 @@
 	item_state = "t45bhelmet"
 	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0, "wound" = 40)
 //	darkness_view = 0
-
+	armor_block_chance = 25
+	deflection_chance = 10 //10% chance to block damage from blockable bullets and redirect the bullet at a random angle. Not nearly as effective as true power armor
 	requires_training = FALSE
+
+/obj/item/clothing/head/helmet/f13/power_armor/t45b/restored
+	name = "restored T-45b helmet"
+	desc = "(VIII) It's a restored T-45b power armor helmet."
+	armor_block_chance = 80
+	deflection_chance = 20 //20% chance to block damage from blockable bullets and redirect the bullet at a random angle
+	requires_training = TRUE
 
 /obj/item/clothing/head/helmet/f13/power_armor/raiderpa_helm
 	name = "raider T-45b power helmet"
@@ -301,8 +360,9 @@
 	icon_state = "raiderpa_helm"
 	item_state = "raiderpa_helm"
 	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0, "wound" = 40)
-
 	requires_training = FALSE
+	armor_block_chance = 20
+	deflection_chance = 5
 
 /obj/item/clothing/head/helmet/f13/power_armor/hotrod
 	name = "hotrod T-45b power helmet"
@@ -310,8 +370,9 @@
 	icon_state = "t45hotrod_helm"
 	item_state = "t45hotrod_helm"
 	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0, "wound" = 40)
-
 	requires_training = FALSE
+	armor_block_chance = 20
+	deflection_chance = 5 //5% chance to block damage from blockable bullets and redirect the bullet at a random angle. Stripped down version of an already stripped down version
 
 /obj/item/clothing/head/helmet/f13/power_armor/vaulttec
 	name = "Vault-Tec power helmet"
@@ -319,14 +380,26 @@
 	icon_state = "vaultpahelm"
 	item_state = "vaultpahelm"
 	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0, "wound" = 40)
+	armor_block_chance = 40
+	deflection_chance = 10 //10% chance to block damage from blockable bullets and redirect the bullet at a random angle. Not a heavy combat model
+
+/obj/item/clothing/head/helmet/f13/power_armor/vaulttecta
+	name = "Vault-Tec power helmet"
+	desc = "(VIII) A refined suit of power armour, purpose-built by the residents of Vault-115 in order to better keep the peace in their new settlement."
+	icon_state = "vaulttahelm"
+	item_state = "vaulttahelm"
+	armor = list("tier" = 8, "energy" = 50, "bomb" = 48, "bio" = 60, "rad" = 50, "fire" = 80, "acid" = 0, "wound" = 40)
+	slowdown = 0.1
 
 /obj/item/clothing/head/helmet/f13/power_armor/t45d
 	name = "T-45d power helmet"
-	desc = "(IX) It's an old pre-War power armor helmet. It's pretty hot inside of it."
+	desc = "(VIII) It's an old pre-War power armor helmet. It's pretty hot inside of it."
 	icon_state = "t45dhelmet0"
 	item_state = "t45dhelmet0"
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
-	armor = list("tier" = 9, "energy" = 60, "bomb" = 62, "bio" = 100, "rad" = 90, "fire" = 90, "acid" = 0, "wound" = 60)
+	armor = list("tier" = 8, "energy" = 60, "bomb" = 62, "bio" = 100, "rad" = 90, "fire" = 90, "acid" = 0, "wound" = 60)
+	armor_block_chance = 80
+	deflection_chance = 20 //20% chance to block damage from blockable bullets and redirect the bullet at a random angle
 
 /obj/item/clothing/head/helmet/f13/power_armor/t45d/update_icon_state()
 	icon_state = "t45dhelmet[on]"
@@ -354,14 +427,18 @@
 	icon_state = "midwestgrey_helm"
 	item_state = "midwestgrey_helm"
 	armor = list("tier" = 9, "energy" = 60, "bomb" = 62, "bio" = 100, "rad" = 90, "fire" = 90, "acid" = 0, "wound" = 60)
+	armor_block_chance = 80
+	deflection_chance = 20 //20% chance to block damage from blockable bullets and redirect the bullet at a random angle
 
 /obj/item/clothing/head/helmet/f13/power_armor/t51b
 	name = "T-51b power helmet"
-	desc = "(X) It's a T-51b power helmet, typically used by the Brotherhood. It looks somewhat charming."
+	desc = "(IX) It's a T-51b power helmet, typically used by the Brotherhood. It looks somewhat charming."
 	icon_state = "t51bhelmet0"
 	item_state = "t51bhelmet0"
-	armor = list("tier" = 10, "energy" = 65, "bomb" = 62, "bio" = 100, "rad" = 99, "fire" = 90, "acid" = 0, "wound" = 70)
+	armor = list("tier" = 9, "energy" = 65, "bomb" = 62, "bio" = 100, "rad" = 99, "fire" = 90, "acid" = 0, "wound" = 70)
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+	armor_block_chance = 85
+	deflection_chance = 35 //35% chance to block damage from blockable bullets and redirect the bullet at a random angle. Less overall armor compared to T-60, but higher deflection.
 
 /obj/item/clothing/head/helmet/f13/power_armor/t51b/update_icon_state()
 	icon_state = "t51bhelmet[on]"
@@ -391,11 +468,13 @@
 
 /obj/item/clothing/head/helmet/f13/power_armor/t60
 	name = "T-60a power helmet"
-	desc = "(XI) The T-60 powered helmet, equipped with targetting software suite, Friend-or-Foe identifiers, dynamic HuD, and an internal music player."
+	desc = "(X) The T-60 powered helmet, equipped with targetting software suite, Friend-or-Foe identifiers, dynamic HuD, and an internal music player."
 	icon_state = "t60helmet0"
 	item_state = "t60helmet0"
-	armor = list("tier" = 11, "energy" = 70, "bomb" = 82, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 0, "wound" = 80)
+	armor = list("tier" = 10, "energy" = 70, "bomb" = 82, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 0, "wound" = 80)
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+	armor_block_chance = 90
+	deflection_chance = 20 //20% chance to block damage from blockable bullets and redirect the bullet at a random angle. Same deflection as T-45 due to it having the same general shape.
 
 /obj/item/clothing/head/helmet/f13/power_armor/t60/update_icon_state()
 	icon_state = "t60helmet[on]"
@@ -407,6 +486,8 @@
 	icon_state = "excavator"
 	item_state = "excavator"
 	armor = list("tier" = 8, "energy" = 60, "bomb" = 62, "bio" = 100, "rad" = 90, "fire" = 90, "acid" = 0)
+	armor_block_chance = 40
+	deflection_chance = 10 //10% chance to block damage from blockable bullets and redirect the bullet at a random angle. Not a heavy combat model
 
 /obj/item/clothing/head/helmet/f13/power_armor/advanced
 	name = "advanced power helmet"
@@ -414,6 +495,8 @@
 	icon_state = "advhelmet1"
 	item_state = "advhelmet1"
 	armor = list("linemelee" = 300, "linebullet" = 300, "linelaser" = 300, "energy" = 75, "bomb" = 72, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 0, "wound" = 90)
+	armor_block_chance = 100 //Enclave. 'nuff said
+	deflection_chance = 40 //40% chance to block damage from blockable bullets and redirect the bullet at a random angle. Your ride's over mutie, time to die.
 
 /obj/item/clothing/head/helmet/f13/power_armor/advanced/mk2
 	name = "advanced power helmet MK2"
@@ -435,7 +518,6 @@
 	item_state = "tesla"
 	armor = list("linemelee" = 200, "linebullet" = 200, "linelaser" = 300, "energy" = 95, "bomb" = 62, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 0, "wound" = 80)
 	var/hit_reflect_chance = 35
-	var/list/protected_zones = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 /obj/item/clothing/head/helmet/f13/power_armor/tesla/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(is_energy_reflectable_projectile(object) && (attack_type == ATTACK_TYPE_PROJECTILE) && (def_zone in protected_zones))
@@ -469,11 +551,17 @@
 	cold_protection = HEAD //This tam brings the warm reggae and Jamaican sun with it.
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
-/obj/item/clothing/head/f13/fez
-	name = "fez"
-	desc = "(I) Fezzes are cool!"
-	icon_state = "fez"
-	item_state = "secsoft"
+/obj/item/clothing/head/f13/hairband
+	name = "hairband"
+	desc = "Pretty yellow hairband"
+	icon_state = "50shairband"
+	item_state = "50shairband"
+
+/obj/item/clothing/head/f13/nursehat
+	name = "nursehat"
+	desc = "White cloth headdress for nurses"
+	icon_state = "nursehat"
+	item_state = "nursehat"
 
 /obj/item/clothing/head/f13/beaver
 	name = "beaverkin"
@@ -684,14 +772,20 @@
 	item_state = "rigscustom_helmet"
 	icon = 'icons/fallout/clothing/hats.dmi'
 
+/obj/item/clothing/head/helmet/f13/ncr/rangercombat/pricecustom
+	name = "spider riot helmet"
+	desc = "A customised riot helmet reminiscient of the more advanced riot helmets found in the Divide, sporting purple lenses over the traditional red or green and a pair of red fangs painted over the respirator. The back of the helmet has a the face of an albino spider painted over it."
+	icon_state = "price_ranger"
+	item_state = "price_ranger"
+
 /obj/item/clothing/head/helmet/f13/ncr/rangercombat/foxcustom
 	name = "reclaimed ranger-hunter combat helmet"
-	desc = "A reclaimed Ranger-Hunter centurion helmet, carefully and lovingly restored to working condition with a sniper's veil wrapped around the neck. 'DE OPPRESSO LIBER' is stenciled on the front."
+	desc = "A reclaimed Ranger-Hunter centurion helmet, carefully and lovingly restored to working condition with a sniper's veil wrapped around the neck. 'DE OPPRESSO LIBER' is also stenciled on the top of the helmet, along with what seems to be faded whiskers painted on the front."
 	icon_state = "foxranger"
 	item_state = "foxranger"
 	actions_types = list(/datum/action/item_action/toggle)
-	toggle_message = "You put the sniper's veil on"
-	alt_toggle_message = "You take the sniper's veil off"
+	toggle_message = "You take the sniper's veil off."
+	alt_toggle_message = "You put the sniper's veil on."
 	can_toggle = 1
 	toggle_cooldown = 0
 
@@ -758,3 +852,51 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
+
+/obj/item/clothing/head/helmet/f13/marlowhat
+	name = "boss of the plains hat"
+	desc = "(IV) A thick undyed felt cowboy hat, bleached from excessive sun exposure and creased from heavy usage."
+	icon_state = "marlowhat"
+	item_state = "marlowhat"
+	armor = list("tier" = 4, "energy" = 25, "bomb" = 30, "bio" = 20, "rad" = 0, "fire" = 50, "acid" = 0)
+	flags_inv = HIDEEARS|HIDEHAIR
+
+/obj/item/clothing/head/helmet/f13/marlowhat/Initialize()
+	. = ..()
+	AddComponent(/datum/component/armor_plate)
+
+/obj/item/clothing/head/helmet/f13/bride_veil
+	name = "bridal veil"
+	desc = "(I) A thin, white bridal veil. It seems to have been hand-made using remarkably well preserved and delicate pre-war fabric."
+	icon_state = "bride_veil"
+	item_state = "bride_veil"
+	armor = list("tier" = 1, "energy" = 0, "bomb" = 25, "bio" = 0, "rad" = 0)
+	alt_toggle_message = "You push the veil down "
+	can_toggle = 1
+	flags_inv = HIDEEARS
+	actions_types = list(/datum/action/item_action/toggle)
+	toggle_cooldown = 0
+	flags_cover = HEADCOVERSEYES
+	visor_flags_cover = HEADCOVERSEYES
+	dog_fashion = null
+
+/obj/item/clothing/head/helmet/f13/bride_veil/attack_self(mob/user)
+	if(can_toggle && !user.incapacitated())
+		if(world.time > cooldown + toggle_cooldown)
+			cooldown = world.time
+			up = !up
+			flags_1 ^= visor_flags
+			flags_inv ^= visor_flags_inv
+			flags_cover ^= visor_flags_cover
+			icon_state = "[initial(icon_state)][up ? "up" : ""]"
+			to_chat(user, "[up ? alt_toggle_message : toggle_message] \the [src]")
+
+			user.update_inv_head()
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.head_update(src, forced = 1)
+
+			if(active_sound)
+				while(up)
+					playsound(src.loc, "[active_sound]", 100, 0, 4)
+					sleep(15)

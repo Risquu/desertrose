@@ -2,8 +2,7 @@
 	projectile_type = /obj/item/projectile/f13plasma
 	select_name = "plasma burst"
 	fire_sound = 'sound/weapons/plasma_cutter.ogg'
-	delay = 15
-	e_cost = 25
+	e_cost = 100
 
 /obj/item/ammo_casing/energy/plasma/adv
 	projectile_type = /obj/item/projectile/plasma/adv
@@ -47,3 +46,8 @@
 	icon_state = "ion"
 	fire_sound = 'sound/f13weapons/plasma_pistol.ogg'
 	e_cost = 1000 //four shots and you're out. use them wisely.
+
+/obj/item/ammo_casing/energy/plasma/crusader
+	projectile_type = /obj/item/projectile/f13plasma/pistol/glock
+	e_cost = 200 //10 shots
+

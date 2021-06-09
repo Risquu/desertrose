@@ -171,7 +171,7 @@
 	var/obj/item/ammo_casing/energy/C = ammo_type[index]		//energy weapons should not have no casings, if it does you deserve the runtime.
 	current_firemode_index = index
 	fire_sound = C.fire_sound
-	fire_delay = C.delay
+	//fire_delay = C.delay
 	if(user_for_feedback)
 		to_chat(user_for_feedback, "<span class='notice'>[src] is now set to [C.select_name || C].</span>")
 	post_set_firemode()
@@ -356,6 +356,7 @@
 			cell = null
 			to_chat(user, "<span class='notice'>You pull the cell out of \the [src].</span>")
 			playsound(src, 'sound/f13weapons/equipsounds/laserreload.ogg', 50, 1)
+			update_icon()
 		else
 			to_chat(user, "<span class='notice'>There's no cell in \the [src].</span>")
 		return
@@ -375,6 +376,7 @@
 		cell = null
 		to_chat(user, "<span class='notice'>You pull the cell out of \the [src].</span>")
 		playsound(src, 'sound/f13weapons/equipsounds/laserreload.ogg', 50, 1)
+		update_icon()
 	else
 		to_chat(user, "<span class='notice'>There's no cell in \the [src].</span>")
 	return

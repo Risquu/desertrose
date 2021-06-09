@@ -41,6 +41,9 @@
 	var/socks = "Nude" //Which socks the player wants
 	var/socks_color = "FFFFFF"
 
+	var/warpaint = null
+	var/warpaint_color = null
+
 	//Equipment slots
 	var/obj/item/wear_suit = null
 	var/obj/item/w_uniform = null
@@ -73,6 +76,8 @@
 	var/lastpuke = 0
 	var/account_id
 	var/last_fire_update
+
+	var/busy= FALSE
 
 /// Unarmed parry data for human
 /datum/block_parry_data/unarmed/human

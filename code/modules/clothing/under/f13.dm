@@ -11,6 +11,18 @@
 
 //Vault
 
+/obj/item/clothing/under/f13/housewifedress50s
+	name = "50s style dress"
+	desc = "Fancy checkered yellow dress with small shoulder puffs."
+	icon_state = "dress50s"
+	item_state = "dress50s"
+
+/obj/item/clothing/under/f13/picnicdress50s
+	name = "50s style dress"
+	desc = "Cheery polkadot casual dress."
+	icon_state = "dresspicnic50s"
+	item_state = "dresspicnic50s"
+
 /obj/item/clothing/under/f13/vault
 	name = "vault jumpsuit"
 	desc = "A blue jumpsuit with a yellow vault pattern printed on it."
@@ -35,6 +47,7 @@
 	random_sensor = FALSE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 30, "fire" = 20, "acid" = 50)
 
+
 //NCR
 
 /obj/item/clothing/under/f13/ncr
@@ -45,6 +58,14 @@
 	item_state = "ncr_uniform"
 	item_color = "ncr_uniform"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 30, "fire" = 20, "acid" = 50)
+
+/obj/item/clothing/under/f13/ncr/ncr_officer
+	name = "NCR officer fatigues"
+	desc = "A standard service uniform for commissioned officers of the New California Republic."
+	can_adjust = TRUE
+	icon_state = "ncr_officer"
+	item_state = "ncr_officer"
+	item_color = "ncr_officer"
 
 /obj/item/clothing/under/f13/ncr/scout
 	name = "NCR scout fatigues"
@@ -60,6 +81,14 @@
 	icon_state = "ncr_fatigue_pants"
 	item_state = "ncr_fatigue_pants"
 	item_color = "ncr_fatigue_pants"
+
+/obj/item/clothing/under/f13/ncr/ncr_shorts
+	name = "NCR fatigue shorts"
+	desc = "A set of uniform shorts and lightweight shirt for NCR troopers deployed in hot climates."
+	can_adjust = TRUE
+	icon_state = "ncr_shorts"
+	item_state = "ncr_shorts"
+	item_color = "ncr_shorts"
 
 /obj/item/clothing/under/f13/caravaneer
 	name = "caravaneer outfit"
@@ -176,6 +205,12 @@
 	item_state = "thaxflannel"
 	item_color = "thaxflannel"
 
+/obj/item/clothing/under/f13/ranger/erin
+	name = "desert pants"
+	desc = "An old pair of beat up, Pre-War BDUs. These ones are emblazoned with desert patterns, and it has been reinforced around the left knee."
+	icon_state = "erin_pants"
+	item_state = "erin_pants"
+
 /obj/item/clothing/under/f13/ranger/blue
 	name = "blue ranger outfit"
 	desc = "Simple rustic clothes for a big iron packin' lawman. A blue collar shirt with tan slacks."
@@ -255,7 +290,119 @@
 	item_color = "recon"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 40, "fire" = 30, "acid" = 80)
 
+/obj/item/clothing/under/f13/bos/fatigues
+	name = "brotherhood fatigues"
+	desc = "A dry cleaned set of grey fatigues with a brown belt, commonly worn by the off-duty members of the Brotherhood of Steel."
+	icon_state = "bos_fatigues"
+	item_state = "bos_fatigues"
+	can_adjust = TRUE
+
+/obj/item/clothing/under/f13/bos/bodysuit
+	name = "brotherhood bodysuit"
+	desc = "A bodysuit worn by members of the Brotherhood of steel."
+	icon_state = "bos_bodysuit"
+	item_state = "bos_bodysuit"
+	can_adjust = TRUE
+
+/obj/item/clothing/under/f13/bos/f/bodysuit
+	name = "brotherhood bodysuit"
+	desc = "A bodysuit worn by members of the Brotherhood of steel."
+	icon_state = "bos_bodysuit_f"
+	item_state = "bos_bodysuit_f"
+	body_parts_covered = CHEST
+	can_adjust = TRUE
+
+/obj/item/clothing/under/f13/bos/bodysuit/knight
+	name = "brotherhood knight bodysuit"
+	desc = "A bodysuit worn by the Knights of the Brotherhood of steel."
+	icon_state = "bos_bodysuit_navy"
+	item_state = "bos_bodysuit_navy"
+	
+/obj/item/clothing/under/f13/bos/f/bodysuit/knight
+	name = "brotherhood knight bodysuit"
+	desc = "A bodysuit worn by the Knights of the Brotherhood of steel."
+	icon_state = "bos_bodysuit_navy_f"
+	item_state = "bos_bodysuit_navy_f"
+
+/obj/item/clothing/under/f13/bos/bodysuit/scribe
+	name = "brotherhood scribe bodysuit"
+	desc = "A bodysuit worn by the Scribes of the Brotherhood of steel."
+	icon_state = "bos_bodysuit_red"
+	item_state = "bos_bodysuit_red"
+
+/obj/item/clothing/under/f13/bos/f/bodysuit/scribe
+	name = "brotherhood scribe bodysuit"
+	desc = "A bodysuit worn by the Scribes of the Brotherhood of steel."
+	icon_state = "bos_bodysuit_red_f"
+	item_state = "bos_bodysuit_red_f"
+
+/obj/item/clothing/under/f13/bos/bodysuit/paladin
+	name = "brotherhood paladin bodysuit"
+	desc = "A bodysuit worn by the Paladins of the Brotherhood of steel."
+	icon_state = "bos_bodysuit_grey"
+	item_state = "bos_bodysuit_grey"
+
+/obj/item/clothing/under/f13/bos/f/bodysuit/paladin
+	name = "brotherhood paladin bodysuit"
+	desc = "A bodysuit worn by the Paladins of the Brotherhood of steel."
+	icon_state = "bos_bodysuit_grey_f"
+	item_state = "bos_bodysuit_grey_f"
+
+/obj/item/clothing/under/f13/bosform_f
+	name = "female initiate service uniform"
+	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one has no markings, and looks to be for a feminine person."
+	icon_state = "bosform_f"
+	item_state = "bosform_f"
+	item_color = "bosform_f"
+
+/obj/item/clothing/under/f13/bosform_m
+	name = "male initiate service uniform"
+	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one has no markings, and looks to be for a masculine person."
+	icon_state = "bosform_m"
+	item_state = "bosform_m"
+	item_color = "bosform_m"
+
+/obj/item/clothing/under/f13/bosformsilver_f
+	name = "female brotherhood service uniform"
+	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one bears a silver chain, and looks to be for a feminine person."
+	icon_state = "bosformsilver_f"
+	item_state = "bosformsilver_f"
+	item_color = "bosformsilver_f"
+
+/obj/item/clothing/under/f13/bosformsilver_m
+	name = "male brotherhood service uniform"
+	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one bears a silver chain, and looks to be for a masculine person."
+	icon_state = "bosformsilver_m"
+	item_state = "bosformsilver_m"
+	item_color = "bosformsilver_m"
+
+/obj/item/clothing/under/f13/bosformgold_f
+	name = "female ranking service uniform"
+	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one bears a gold chain; denoting authority, and looks to be for a feminine person."
+	icon_state = "bosformgold_f"
+	item_state = "bosformgold_f"
+	item_color = "bosformgold_f"
+
+/obj/item/clothing/under/f13/bosformgold_m
+	name = "male ranking service uniform"
+	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one bears a gold chain; denoting authority, and looks to be for a masculine person."
+	icon_state = "bosformgold_m"
+	item_state = "bosformgold_m"
+	item_color = "bosformgold_m"
+
 //Legion
+
+/obj/item/clothing/under/f13/campfollowermale
+	name = "camp follower male robe"
+	desc = "Olive colored cloth with a red belt."
+	icon_state = "legcamp"
+	item_state = "brownjsuit"
+
+/obj/item/clothing/under/f13/campfollowerfemale
+	name = "camp follower female robe"
+	desc = "Olive colored cloth with a red sash."
+	icon_state = "legcamp_f"
+	item_state = "legcamp_f"
 
 /obj/item/clothing/under/f13/legskirt
 	name = "legionary fatigues"
@@ -501,6 +648,21 @@
 	item_state = "khan"
 	item_color = "khan"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 10, "acid" = 40)
+
+/obj/item/clothing/under/f13/chinese_khan
+	name = "modified great khan jumpsuit"
+	desc = "An ancient Chinese combat uniform, in use before the war, modified with parts of the uniform of the Great Khans - the flag of China is replaced by a small flame, stitched in with great care, with a much larger flame commonly seen on the front of Khan jackets being visible on the back of the jumpsuit"
+	icon_state = "chinese_khan"
+	item_state = "bl_suit"
+	item_color = "chinese_khan"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 10, "acid" = 40)
+
+/obj/item/clothing/under/f13/ahp_uniform
+	name = "highway patrol uniform"
+	desc = "An old tan police uniform with tight-fitting breeches and a gold badge with the logo of the 'Arizona State Troopers'."
+	icon_state = "ahp_uniform"
+	item_state = "ahp_uniform"
+	item_color = "ahp_uniform"
 
 //WAYFARER TRIBAL
 /obj/item/clothing/under/f13/tribe
@@ -952,6 +1114,17 @@
 	icon_state = "vault42"
 	item_color = "vault42"
 
+/obj/item/clothing/under/f13/vault/vcity
+	name = "VTCC jumpsuit"
+	desc = "The regulation clothing worn by the vault dwellers, of Vault-Tec vaults. It's made of sturdy leather. <br>This jumpsuit bears the symbol of the Vault-Tec City Coalition on the back."
+	icon_state = "vaultcity"
+	item_state = "vaultcity"
+
+/obj/item/clothing/under/f13/vault/vcity/skirt
+	name = "VTCC jumpskirt"
+	icon_state = "vaultcity_skirt"
+	item_state = "vaultcity_skirt"
+
 /obj/item/clothing/under/f13/followers
 	name = "followers outfit"
 	desc = "A white shirt with a pair of dark brown cargo pants - an outfit commonly worn by Followers of the Apocalypse.<br><i>Nihil boni sine labore.</i>"
@@ -1014,6 +1187,12 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 30, "fire" = 30, "acid" = 40)
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HEAD
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HEAD
+
+/obj/item/clothing/under/f13/recon/marine
+	name = "marine wetsuit"
+	desc = "A skin-tight wetsuit designed to keep the user warm when submerged underwater. Designed to work in tandem with marine combat armor."
+	icon_state = "marinesuit"
+	item_state = "marinesuit"
 
 /obj/item/clothing/under/f13/chinese
 	name = "chinese jumpsuit"
@@ -1143,48 +1322,6 @@
 	resistance_flags = UNACIDABLE
 	body_parts_covered = LEGS
 
-/obj/item/clothing/under/f13/bosform_f
-	name = "female initiate service uniform"
-	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one has no markings, and looks to be for a feminine person."
-	icon_state = "bosform_f"
-	item_state = "bosform_f"
-	item_color = "bosform_f"
-
-/obj/item/clothing/under/f13/bosform_m
-	name = "male initiate service uniform"
-	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one has no markings, and looks to be for a masculine person."
-	icon_state = "bosform_m"
-	item_state = "bosform_m"
-	item_color = "bosform_m"
-
-/obj/item/clothing/under/f13/bosformsilver_f
-	name = "female brotherhood service uniform"
-	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one bears a silver chain, and looks to be for a feminine person."
-	icon_state = "bosformsilver_f"
-	item_state = "bosformsilver_f"
-	item_color = "bosformsilver_f"
-
-/obj/item/clothing/under/f13/bosformsilver_m
-	name = "male brotherhood service uniform"
-	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one bears a silver chain, and looks to be for a masculine person."
-	icon_state = "bosformsilver_m"
-	item_state = "bosformsilver_m"
-	item_color = "bosformsilver_m"
-
-/obj/item/clothing/under/f13/bosformgold_f
-	name = "female ranking service uniform"
-	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one bears a gold chain; denoting authority, and looks to be for a feminine person."
-	icon_state = "bosformgold_f"
-	item_state = "bosformgold_f"
-	item_color = "bosformgold_f"
-
-/obj/item/clothing/under/f13/bosformgold_m
-	name = "male ranking service uniform"
-	desc = "A dry-cleaned and fitted formal uniform of the Brotherhood of Steel, for special occasions. This one bears a gold chain; denoting authority, and looks to be for a masculine person."
-	icon_state = "bosformgold_m"
-	item_state = "bosformgold_m"
-	item_color = "bosformgold_m"
-
 /obj/item/clothing/under/f13/atomfaithful
 	name = "faithful attire"
 	desc = "The attire worn by those Faithful to the Division."
@@ -1270,3 +1407,56 @@
 	icon_state = "GunnerPlates"
 	item_state = "GunnerPlates"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 20, "fire" = 20, "acid" = 40)
+
+/obj/item/clothing/under/f13/marlowduds
+	name = "Marlow gang attire"
+	desc = "A washed out crimson overshirt with blue neckerchief and suspended black slacks. The attire is synonymous with the colors of the criminal Marlow gang."
+	icon_state = "marlowduds"
+	item_state = "marlowduds"
+	can_adjust = TRUE
+
+/obj/item/clothing/under/f13/ikeduds
+	name = "gunfighter's gang attire"
+	desc = "A washed out crimson overshirt with blue neckerchief and raw buckskin trousers. The attire is synonymous with the colors of the criminal Marlow gang."
+	icon_state = "ikeduds"
+	item_state = "ikeduds"
+	can_adjust = TRUE
+
+/obj/item/clothing/under/f13/helenduds
+	name = "gambler's gang attire"
+	desc = "A worn black dress shirt under a deep crimson vest with blue neckerchief and suspended black slacks. The attire is synonymous with the colors of the criminal Marlow gang."
+	icon_state = "helenduds"
+	item_state = "helenduds"
+	can_adjust = TRUE
+
+/obj/item/clothing/under/f13/masonduds
+	name = "vagabond's gang attire"
+	desc = "A pair of worn buckskin trousers held up by a heavy pistol belt. The attire is synonymous with the colors of the criminal Marlow gang."
+	icon_state = "masonduds"
+	item_state = "masonduds"
+
+//Super Mutants
+
+/obj/item/clothing/under/f13/mutieshorts
+	name = "large torn shorts"
+	desc = "An incredibly damaged pair of shorts, large enough to fit a super mutant."
+	icon_state = "mutie_shorts"
+	item_state = "mutie_shorts"
+
+/obj/item/clothing/under/f13/mutiesanta
+	name = "red and white jumspuit"
+	desc = "A fairly damaged red and white shirt with matching shorts, large enough to fit a super mutant."
+	icon_state = "mutie_santa"
+	item_state = "mutie_santa"
+
+/obj/item/clothing/under/f13/vaultmutie
+	name = "torn vault 113 jumpsuit"
+	desc = "Once, it was a blue jumpsuit with a yellow vault pattern and the number 11 printed on it, now torn and ripped."
+	icon_state = "mutie_vault_jumspuit"
+	item_state = "mutie_vault_jumspuit"
+
+/obj/item/clothing/under/f13/mutieranger
+	name = "mutant Ranger armour"
+	desc = "Once, it was a blue jumpsuit with a yellow vault pattern and the number 11 printed on it, now torn and ripped."
+	icon_state = "mutie_ranger_under"
+	item_state = "mutie_ranger_under"

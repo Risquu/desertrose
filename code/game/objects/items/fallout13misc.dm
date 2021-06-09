@@ -199,13 +199,24 @@
 	item_state = "locustflag"
 	faction = "Locust"
 
+/obj/item/flag/vtcc
+	name = "Vault-Tec Cityscape Coalition flag"
+	desc = "A flag reminiscent of that from old America. The symbol of Vault-Tec appropriated in place of the old stars sharing their colour, with 4 stripes in 2 colours."
+	icon_state = "vtccflag"
+	item_state = "vtccflag"
+	faction = "VTCC"
+
+/obj/item/flag/vtcc/highvhills
+	name = "High Valley Hills flag"
+	desc = "A flag with two white stripes, blue border and a red centre with a white Vault-Tec logo, turned on its side and stretched out."
+
 /obj/item/flag/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/sheet/leather) && item_state == "emptyflag")
 		visible_message("<span class='notice'>[user] begins to make a flag.</span>")
 		if(do_after(user, 60, target = src))
 			var/obj/item/stack/sheet/leather/H = I
 			if(H.use(1))
-				var/flag = alert(user, "Please choose which faction flag you wish to create.", "Flag type", "NCR", "Legion", "Oasis",)
+				var/flag = alert(user, "Please choose which faction flag you wish to create.", "NCR", "Legion", "Oasis", "BOS",)
 				switch(flag)
 					if("NCR")
 						name = "NCR flag"
@@ -225,6 +236,12 @@
 						icon_state = "oasisflag"
 						item_state = "oasisflag"
 						faction = "Oasis"
+					if("BOS")
+						name = "BOS flag"
+						desc = "A red and black flag with a sword surrounded in gears and wings, in a dazzling gold."
+						icon_state = "bosflag"
+						item_state = "bosflag"
+						faction = "BOS"
 				update_icon()
 	else
 		attack_hand(user)
@@ -262,3 +279,52 @@
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("bashed")
+
+/obj/item/warpaint_bowl
+	name = "warpaint bowl"
+	desc = "A small ceramic bowl, used for the mixing of warpaints by a skilled shaman."
+	icon = 'icons/mob/tribe_warpaint.dmi'
+	icon_state = "wp_bowl"
+	/// List of choosable warpaint icon states.
+	var/static/list/choices = list(
+		"cazador", "claw", "facestripe",
+		"armwrap", "legwrap", "lizard",
+		"priestess", "stripe", "spider",
+		"prongs", "tears", "thorns",
+		"whitestripe")
+	/// Currently selected warpaint.
+	var/paint_type = null
+	/// Currently selected warpaint color.
+	var/paint_color = "FFFFFF"
+
+/obj/item/warpaint_bowl/attack_self(mob/user)
+	. = ..()
+	var/chosen_paint = input(user, "Pick a warpaint style.", "Tribal warpaint", paint_type) as null|anything in choices
+	if(!chosen_paint)
+		return
+	paint_type = chosen_paint
+
+	var/chosen_color = input(user, "Pick a warpaint color.", "Tribal warpaint", paint_color) as null|color
+	if(!chosen_color)
+		return
+	paint_color = chosen_color
+
+/obj/item/warpaint_bowl/attack(mob/living/M, mob/living/user, attackchain_flags, damage_multiplier)
+	if(!paint_type || !paint_color)
+		to_chat(user, SPAN_WARNING("You need to select a style first!"))
+		return
+	if(!user.Adjacent(M) || !ishuman(M))
+		return ..()
+	var/mob/living/carbon/human/H = M
+	if((H.warpaint == paint_type) && (H.warpaint_color == paint_color))
+		to_chat(user, SPAN_WARNING("[H] is already painted with this style!"))
+		return
+
+	user.visible_message(SPAN_NOTICE("[user] starts painting [H] with [src]."), SPAN_NOTICE("You start painting [H] with [src]."))
+	if(!do_mob(user, H, 10 SECONDS))
+		return
+	user.visible_message(SPAN_NOTICE("[user] applies warpaint onto [H]."), SPAN_NOTICE("You apply warpaint onto [H]."))
+
+	H.warpaint = paint_type
+	H.warpaint_color = paint_color
+	H.update_body()

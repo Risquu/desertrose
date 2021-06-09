@@ -55,8 +55,8 @@
 	var/obj/item/attachments/scope
 	var/obj/item/attachments/recoil_decrease
 	var/obj/item/attachments/burst_improvement
-	var/obj/item/attachments/bullet_speed
 	var/obj/item/attachments/auto_sear
+	var/obj/item/attachments/bullet_speed
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -83,7 +83,7 @@
 	var/can_automatic = FALSE
 
 	var/mutable_appearance/suppressor_overlay
-	var/suppressor_state = "suppressor"
+	var/suppressor_state = null
 	var/suppressed = null					//whether or not a message is displayed when fired
 	var/can_suppress = FALSE
 	var/can_unsuppress = TRUE
@@ -104,6 +104,7 @@
 	var/isbow = null
 	var/extra_damage = 0				//Number to add to individual bullets.
 	var/extra_penetration = 0			//Number to add to armor penetration of individual bullets.
+	var/extra_speed = TILES_TO_PIXELS(0) //Additional speed to the projectile.
 
 	//Zooming
 	var/zoomable = FALSE //whether the gun generates a Zoom action on creation
@@ -114,6 +115,7 @@
 
 	var/dualwield_spread_mult = 1		//dualwield spread multiplier
 
+	//var/tinkered = 0
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 //	var/projectile_damage_multiplier = 1
 
@@ -173,11 +175,12 @@
 	if (isenergy == TRUE)
 		to_chat(user, "<span class='danger'>*power failure*</span>")
 		playsound(src, 'sound/f13weapons/noammoenergy.ogg', 30, 1)
+		return
 	if (isbow == TRUE)
 		to_chat(user, "<span class='danger'>*no arrows*</span>") //Insert cool plink plink sound here
-	else
-		to_chat(user, "<span class='danger'>*click*</span>")
-		playsound(src, "gun_dry_fire", 30, 1)
+		return
+	to_chat(user, "<span class='danger'>*click*</span>")
+	playsound(src, "gun_dry_fire", 30, 1)
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
 	if(recoil)
@@ -382,7 +385,7 @@
 		if(chambered)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			before_firing(target,user)
-			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, extra_damage, extra_penetration, src))
+			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, extra_damage, extra_penetration, src, extra_speed))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -417,7 +420,7 @@
 		else //Smart spread
 			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread), 1)
 		before_firing(target,user)
-		if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, extra_damage, extra_penetration, src))
+		if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, extra_damage, extra_penetration, src, extra_speed))
 			shoot_with_empty_chamber(user)
 			firing = FALSE
 			return FALSE
@@ -491,7 +494,6 @@
 			else
 				src.spread = 0
 			to_chat(user, "<span class='notice'>You attach \the [R] to \the [src].</span>")
-/*
 	else if(istype(I, /obj/item/attachments/bullet_speed))
 		var/obj/item/attachments/bullet_speed/B = I
 		if(!bullet_speed && can_attachments)
@@ -499,9 +501,8 @@
 				return
 			bullet_speed = B
 			src.desc += " It has an improved barrel installed."
-			src.projectile_speed -= 0.15
+			src.extra_speed += TILES_TO_PIXELS(15)
 			to_chat(user, "<span class='notice'>You attach \the [B] to \the [src].</span>")
-*/
 	else if(istype(I, /obj/item/attachments/burst_improvement))
 		var/obj/item/attachments/burst_improvement/T = I
 		if(!burst_improvement && burst_size > 1 && can_attachments)
@@ -698,7 +699,8 @@
 
 /datum/action/item_action/toggle_scope_zoom/Trigger()
 	var/obj/item/gun/gun = target
-	gun.zoom(owner)
+	if(do_after(owner,10))
+		gun.zoom(owner)
 
 /datum/action/item_action/toggle_scope_zoom/IsAvailable(silent = FALSE)
 	. = ..()
@@ -722,7 +724,8 @@
 	else
 		zoomed = !zoomed
 
-	if(zoomed)
+	if(zoomed)//if we need to be zoomed in
+		user.add_movespeed_modifier(/datum/movespeed_modifier/scoped_in)
 		var/_x = 0
 		var/_y = 0
 		switch(user.dir)
@@ -742,6 +745,7 @@
 		RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
 		user.visible_message("<span class='notice'>[user] looks down the scope of [src].</span>", "<span class='notice'>You look down the scope of [src].</span>")
 	else
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/scoped_in)
 		user.client.change_view(CONFIG_GET(string/default_view))
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
@@ -750,7 +754,7 @@
 		user.visible_message("<span class='notice'>[user] looks up from the scope of [src].</span>", "<span class='notice'>You look up from the scope of [src].</span>")
 
 /obj/item/gun/proc/on_walk(mob/living/L)
-	zoom(L, FALSE)
+	//zoom(L, FALSE)
 
 /obj/item/gun/proc/rotate(mob/living/user, old_dir, direction = FALSE)
 	var/_x = 0

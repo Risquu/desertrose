@@ -98,7 +98,80 @@
 							"NCR Combat Medic",
 							"NCR Trooper",
 							"NCR Rear Echelon",
-							"NCR Off-Duty"
+							"NCR Off-Duty",
+							"NCR Recruit"
+						)
+
+/datum/gear/head/steelpot_goggles
+	name = "NCR storm helmet"
+	path = /obj/item/clothing/head/f13/ncr/steelpot_goggles
+	restricted_desc = "NCR"
+	restricted_roles = list("NCR Captain",
+							"NCR Lieutenant",
+							"NCR Medical Officer",
+							"NCR Sergeant First Class",
+							"NCR Lieutenant",
+							"NCR Sergeant",
+							"NCR Corporal",
+							"NCR Combat Engineer",
+							"NCR Combat Medic",
+							"NCR Trooper",
+							"NCR Rear Echelon",
+							"NCR Recruit"
+						)
+
+/datum/gear/head/steelpot_gambler
+	name = "NCR gambler helmet"
+	path = /obj/item/clothing/head/f13/ncr/steelpot_gambler
+	restricted_desc = "NCR"
+	restricted_roles = list("NCR Captain",
+							"NCR Lieutenant",
+							"NCR Medical Officer",
+							"NCR Sergeant First Class",
+							"NCR Lieutenant",
+							"NCR Sergeant",
+							"NCR Corporal",
+							"NCR Combat Engineer",
+							"NCR Combat Medic",
+							"NCR Trooper",
+							"NCR Rear Echelon",
+							"NCR Recruit"
+						)
+
+datum/gear/head/steelpot_bandolier
+	name = "NCR bandolier helmet"
+	path = /obj/item/clothing/head/f13/ncr/steelpot_bandolier
+	restricted_desc = "NCR"
+	restricted_roles = list("NCR Captain",
+							"NCR Lieutenant",
+							"NCR Medical Officer",
+							"NCR Sergeant First Class",
+							"NCR Lieutenant",
+							"NCR Sergeant",
+							"NCR Corporal",
+							"NCR Combat Engineer",
+							"NCR Combat Medic",
+							"NCR Trooper",
+							"NCR Rear Echelon",
+							"NCR Recruit"
+						)
+
+datum/gear/head/steelpot_patriot
+	name = "NCR patriot helmet"
+	path = /obj/item/clothing/head/f13/ncr/steelpot_patriot
+	restricted_desc = "NCR"
+	restricted_roles = list("NCR Captain",
+							"NCR Lieutenant",
+							"NCR Medical Officer",
+							"NCR Sergeant First Class",
+							"NCR Lieutenant",
+							"NCR Sergeant",
+							"NCR Corporal",
+							"NCR Combat Engineer",
+							"NCR Combat Medic",
+							"NCR Trooper",
+							"NCR Rear Echelon",
+							"NCR Recruit"
 						)
 
 /datum/gear/head/ncr_recon
@@ -126,6 +199,24 @@
 	path = /obj/item/clothing/head/f13/ncr_stetson
 	restricted_desc = "NCR"
 	restricted_roles = list("NCR Off-Duty")
+
+/datum/gear/head/bos_beret
+	name = "Brotherhood of Steel beret"
+	path = /obj/item/clothing/head/f13/boscap/beret
+	restricted_desc = "BoS"
+	restricted_roles = list(
+							"Head Paladin",
+							"Head Knight",
+							"Head Scribe",
+							"Star Paladin",
+							"Star Knight",
+							"Proctor",
+							"Paladin",
+							"Knight",
+							"Scribe",
+							"Initiate",
+							"BoS Off-Duty"
+	)
 
 /datum/gear/head/wkepi
 	name = "white kepi"

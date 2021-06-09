@@ -25,6 +25,7 @@
 	ADD_TRAIT(H, TRAIT_HARD_YARDS, src)
 	ADD_TRAIT(H, TRAIT_TRAPPER, src)
 	ADD_TRAIT(H, TRAIT_MACHINE_SPIRITS, src)
+	H.grant_language(/datum/language/wayfarer)
 
 /*
 Tribal Chief
@@ -114,8 +115,15 @@ Tribal Shaman
 		/obj/item/reagent_containers/glass/mortar=1,
 		/obj/item/pestle=1,
 		/obj/item/reagent_containers/glass/primitive_chem_isolator=1,
-		/obj/item/reagent_containers/pill/patch/healpoultice=2
+		/obj/item/reagent_containers/pill/patch/healpoultice=2,
+		/obj/item/storage/bag/chemistry/tribal=1
 	)
+
+/datum/outfit/job/tribal/f13shaman/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	if(visualsOnly)
+		return
+	ADD_TRAIT(H, TRAIT_SURGERY_MID, src)
 
 /datum/outfit/loadout/invoker
 	name = "Invoker"
@@ -156,10 +164,10 @@ Tribal Head Hunter
 	if(visualsOnly)
 		return
 	ADD_TRAIT(H, TRAIT_LIFEGIVER, src)
-	//ADD_TRAIT(H, TRAIT_BIG_LEAGUES, src) //Disabled until Big Leagues can be changed to armour penetration instead of bonus damage, as having +5 damage per attack on a role that gets a melee weapon with a superfast attack speed is kind of broken.
+	ADD_TRAIT(H, TRAIT_BIG_LEAGUES, src)
 
 /datum/outfit/job/tribal/f13Hhunter
-	name = "Hhunter"
+	name = "Hunter"
 	jobtype = /datum/job/tribal/f13Hhunter
 	uniform = 	/obj/item/clothing/under/f13/wayfarer/hunter
 	suit = 		/obj/item/clothing/suit/hooded/cloak/hhunter
@@ -192,11 +200,12 @@ Druid
 	access = list(ACCESS_TRIBE)
 	minimal_access = list(ACCESS_TRIBE)
 
-/datum/outfit/job/tribal/f13shaman/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/tribal/f13druid/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	if(visualsOnly)
 		return
 	ADD_TRAIT(H, TRAIT_SPIRITUAL, src)
+	ADD_TRAIT(H, TRAIT_SURGERY_LOW, src)
 
 /datum/outfit/job/tribal/f13druid
 	name = "Druid"
@@ -210,7 +219,8 @@ Druid
 		/obj/item/reagent_containers/glass/mortar=1,
 		/obj/item/pestle=1,
 		/obj/item/reagent_containers/glass/primitive_chem_isolator=1,
-		/obj/item/reagent_containers/pill/patch/healpoultice=2)
+		/obj/item/reagent_containers/pill/patch/healpoultice=2,
+		/obj/item/storage/bag/chemistry/tribal=1)
 
 /*
 Villager
@@ -341,7 +351,7 @@ Hunter
 		/obj/item/reagent_containers/pill/patch/healingpowder=2,
 		/obj/item/stack/medical/gauze=1,
 		/obj/item/flashlight/flare/torch=1)
-	
+
 /datum/outfit/loadout/ranged
 	name = "Ranged"
 	backpack_contents = list(

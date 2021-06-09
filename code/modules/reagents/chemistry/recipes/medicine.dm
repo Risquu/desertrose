@@ -6,12 +6,12 @@
 	required_reagents = list(/datum/reagent/silicon = 1, /datum/reagent/copper = 1)
 	required_catalysts = list(/datum/reagent/toxin/plasma = 5)
 
-/datum/chemical_reaction/rezadone
+/*/datum/chemical_reaction/rezadone
 	name = "Rezadone"
 	id = /datum/reagent/medicine/rezadone
 	results = list(/datum/reagent/medicine/rezadone = 3)
 	required_reagents = list(/datum/reagent/toxin/carpotoxin = 1, /datum/reagent/cryptobiolin = 1, /datum/reagent/copper = 1)
-
+*/
 /datum/chemical_reaction/spaceacillin
 	name = "Spaceacillin"
 	id = /datum/reagent/medicine/spaceacillin
@@ -376,3 +376,10 @@
 	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/medicine/spaceacillin = 1)
 	required_temp = 300
 */
+
+/datum/chemical_reaction/mentats
+	name = "mentats"
+	id = /datum/reagent/medicine/mentat
+	results = list(/datum/reagent/medicine/mentat = 3)
+	required_reagents = list(/datum/reagent/medicine/neurine = 1, /datum/reagent/cellulose = 1)
+	required_temp = 451

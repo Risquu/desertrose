@@ -5,15 +5,15 @@
 	display_name = "Weapon Development Technology"
 	description = "Our researchers have found new to weaponize just about everything now."
 	prereq_ids = list("engineering")
-	design_ids = list("pin_testing", "tele_shield", "mfc", "ec")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	design_ids = list("pin_testing", "tele_shield", "mfc", "ec", "crusader_pistol")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 
 /datum/techweb_node/adv_weaponry
 	id = "adv_weaponry"
 	display_name = "Advanced Weapon Development Technology"
 	description = "Our weapons are breaking the rules of reality by now."
 	prereq_ids = list("adv_engi", "weaponry")
-	design_ids = list("pin_loyalty", "bullet_shield", "ecp","fluxcap","focusedlenses","superconductor","advreceiver","preassembly","superalloys")
+	design_ids = list("pin_loyalty", "bullet_shield", "ecp", "fluxcap", "focusedlenses", "superconductor", "advreceiver", "preassembly", "superalloys", "crusader_rifle", "crusader_laser")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 
 /datum/techweb_node/electric_weapons

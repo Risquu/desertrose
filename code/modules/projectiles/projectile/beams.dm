@@ -264,11 +264,11 @@
 	armour_penetration = 0.5
 
 //plasma caster
-/obj/item/projectile/plasmacaster
+/obj/item/projectile/f13plasma/plasmacaster
 	name = "plasma bolt"
 	icon_state = "plasma_clot"
 	damage_type = BURN
-	damage = 50
+	damage = 70
 	armour_penetration = 0.6
 	flag = "laser"
 	eyeblur = 0
@@ -277,12 +277,12 @@
 /obj/item/projectile/beam/laser/lasgun //AER9
 	name = "laser beam"
 	damage = 33
-	armour_penetration = 0.42
+	armour_penetration = 0.44
 
 /obj/item/projectile/beam/laser/pistol //AEP7
 	name = "laser beam"
-	damage = 28
-	armour_penetration = 0.35
+	damage = 35
+	armour_penetration = 0.25
 
 /obj/item/projectile/beam/laser/ultra_pistol
 	name = "laser beam"
@@ -302,12 +302,12 @@
 	armour_penetration = 0.7
 
 /obj/item/projectile/beam/laser/pistol/wattz //Wattz pistol
-	damage = 24
+	damage = 31
 
 /obj/item/projectile/beam/laser/pistol/wattz/magneto //upgraded Wattz
 	name = "penetrating laser beam"
-	damage = 25
-	armour_penetration = 0.35
+	damage = 33
+	armour_penetration = 0.20
 
 /obj/item/projectile/beam/laser/solar //Solar Scorcher
 	name = "solar scorcher beam"
@@ -317,6 +317,11 @@
 /obj/item/projectile/beam/laser/tribeam //Tribeam laser, fires 3 shots, will melt you
 	name = "tribeam laser"
 	damage = 21
+	armour_penetration = 0.25
+
+/obj/item/projectile/beam/laser/tribeam/baby
+	name = "multilas laser"
+	damage = 9
 	armour_penetration = 0.25
 
 /obj/item/projectile/f13plasma //Plasma rifle
@@ -355,7 +360,7 @@
 	armour_penetration = 0.35
 
 /obj/item/projectile/f13plasma/pistol/glock //Glock (streamlined plasma pistol)
-	damage = 40
+	damage = 45
 	armour_penetration = 0.5
 
 /obj/item/projectile/f13plasma/scatter //Multiplas, fires 3 shots, will melt you
@@ -366,7 +371,7 @@
 	name = "rapidfire beam"
 	icon_state = "xray"
 	damage = 35
-	armour_penetration = 0.55
+	armour_penetration = 0.40
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
 
@@ -386,14 +391,26 @@
 
 /obj/item/projectile/beam/laser/aer14 //AER14
 	name = "laser beam"
-	damage = 40
-	armour_penetration = 0.75
+	damage = 38
+	armour_penetration = 0.6
 	icon_state = "omnilaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 
+/obj/item/projectile/beam/laser/aer12 //AER12
+	name = "laser beam"
+	damage = 34
+	armour_penetration = 0.55
+	icon_state = "xray"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+	light_color = LIGHT_COLOR_GREEN
+
 /obj/item/projectile/beam/laser/wattz2k
 	name = "laser bolt"
-	damage = 40
+	damage = 35
 	armour_penetration = 0.5
 
+/obj/item/projectile/beam/laser/musket //musket
+	name = "laser bolt"
+	damage = 40
+	armour_penetration = 0.6
